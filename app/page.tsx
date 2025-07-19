@@ -39,9 +39,13 @@ function TaskBoard() {
         if (launchParams?.startParam) {
           const encodedGroupId = launchParams.startParam;
           try {
-            const decodedGroupId = atob(encodedGroupId);
-            console.log("Decoded Group ID:", decodedGroupId);
-            setGroupId(decodedGroupId);
+            if (typeof encodedGroupId === "string") {
+              const decodedGroupId = atob(encodedGroupId);
+              console.log("Decoded Group ID:", decodedGroupId);
+              setGroupId(decodedGroupId);
+            } else {
+              throw new Error("startParam is not a string");
+            }
           } catch (error) {
             console.error("Error decoding group ID:", error);
             setError("Invalid group ID format");
