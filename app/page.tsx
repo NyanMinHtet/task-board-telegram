@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 // Extend the Window interface to include Telegram
 declare global {
   interface Window {
-    Telegram?: any;
+    Telegram?: unknown;
   }
 }
 
