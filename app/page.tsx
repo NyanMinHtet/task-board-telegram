@@ -7,6 +7,13 @@ import TaskForm from "./components/TaskForm";
 import { useLaunchParams } from "@telegram-apps/sdk-react";
 import dynamic from 'next/dynamic';
 
+// Extend the Window interface to include Telegram
+declare global {
+  interface Window {
+    Telegram?: any;
+  }
+}
+
 // Créer un composant client-only pour le TaskBoard
 const TaskBoardClient = dynamic(() => Promise.resolve(TaskBoard), {
   ssr: false
@@ -17,8 +24,16 @@ function TaskBoard() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const launchParams = useLaunchParams();
+  const isTelegram = typeof window !== "undefined" && window.Telegram !== undefined;
 
   useEffect(() => {
+    // Local dev fallback
+    if (!isTelegram && process.env.NODE_ENV === "development") {
+      setGroupId("local-test-group");
+      setIsLoading(false);
+      return;
+    }
+
     const initializeComponent = async () => {
       try {
         if (launchParams?.startParam) {
@@ -44,7 +59,7 @@ function TaskBoard() {
     };
 
     initializeComponent();
-  }, [launchParams]);
+  }, [isTelegram, launchParams]);
 
   if (isLoading) {
     return <div className="p-8">Loading...</div>;
