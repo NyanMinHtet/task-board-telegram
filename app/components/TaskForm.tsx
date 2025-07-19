@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from '@/app/lib/firebase';
+import { db } from '../lib/firebase';
 
 interface TaskFormProps {
   groupId: string;
