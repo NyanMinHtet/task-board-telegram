@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
-import { db } from '@/app/lib/firebase';
-import TaskItem from '@/app/components/TaskItem';
-import { Task } from '@/app/types/task';
+import { db } from '../lib/firebase';
+import TaskItem from '../components/TaskItem';
+import { Task } from '../types/task';
 
 interface TaskListProps {
   groupId: string;
@@ -18,7 +18,7 @@ export default function TaskList({ groupId }: TaskListProps) {
       collection(db, 'tasks'),
       where('groupId', '==', groupId)
     );
-    
+
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
       const taskList: Task[] = [];
       querySnapshot.forEach((doc) => {

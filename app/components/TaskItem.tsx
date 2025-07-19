@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { updateDoc, doc, deleteDoc } from 'firebase/firestore';
 
-import { db } from '@/app/lib/firebase';
-import { Task } from '@/app/types/task';
+import { db } from '../lib/firebase';
+import { Task } from '../types/task';
 
 interface TaskItemProps {
   task: Task;
